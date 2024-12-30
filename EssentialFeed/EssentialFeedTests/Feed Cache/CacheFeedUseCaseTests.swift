@@ -119,7 +119,7 @@ final class CacheFeedUseCaseTests: XCTestCase {
         
         store.completeDeletion(with: deletionError)
         wait(for: [exp], timeout: 1.0)
-        XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed])
+        XCTAssertEqual(receivedError as NSError?, deletionError)
     }
     
     func test_save_failsOnInsertionError() {
@@ -145,7 +145,6 @@ final class CacheFeedUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT()
         let items = [uniqueItem(), uniqueItem()]
         
-        let insertionError = anyNSError()
         let exp = expectation(description: "Wait for save completion")
         
         var receivedError: Error?
